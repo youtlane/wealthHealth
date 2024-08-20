@@ -63,7 +63,7 @@ export default function AddEmployee() {
               </div>
               <div>
                 <label htmlFor="start-date" className="block text-sm font-medium text-gray-700 mb-1">
-                  Start Date
+                  Start Working Date
                 </label>
                 <input
                   id="start-date"
@@ -71,6 +71,22 @@ export default function AddEmployee() {
                   type="date"
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
+              </div>
+              <div>
+                <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1">
+                  Department
+                </label>
+                <select
+                  id="department"
+                  name="department"
+                  className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                >
+                  <option>Sales</option>
+                  <option>Marketing</option>
+                  <option>Engineering</option>
+                  <option>Human Resources</option>
+                  <option>Legal</option>
+                </select>
               </div>
             </div>
           </div>
