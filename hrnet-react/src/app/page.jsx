@@ -50,6 +50,7 @@ export default function AddEmployee() {
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
+              
               <div>
                 <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">
                   Date of Birth
