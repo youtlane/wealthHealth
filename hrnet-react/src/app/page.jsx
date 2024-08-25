@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import './global.css';
 import Image from 'next/image';
 
@@ -16,7 +17,7 @@ export default function AddEmployee() {
                 height={100}
                 className="rounded-lg shadow-md"
               />
-              <a href="employee-list.html" className="mt-2 text-sm text-indigo-600 hover:underline">View Current Employees</a>
+              <Link className="mt-2 text-sm text-indigo-600 hover:underline" href="/allEmployee" >View Current Employees</Link>
               <h2 className="text-xl font-semibold text-gray-800 mt-4">Create Employee</h2>
             </div>
           </div>
@@ -34,6 +35,7 @@ export default function AddEmployee() {
                   type="text"
                   placeholder="Jane"
                   autoComplete="given-name"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -47,6 +49,7 @@ export default function AddEmployee() {
                   type="text"
                   placeholder="Smith"
                   autoComplete="family-name"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -59,6 +62,7 @@ export default function AddEmployee() {
                   id="dob"
                   name="dob"
                   type="date"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -70,6 +74,7 @@ export default function AddEmployee() {
                   id="start-date"
                   name="start-date"
                   type="date"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -80,8 +85,10 @@ export default function AddEmployee() {
                 <select
                   id="department"
                   name="department"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select Department</option>
                   <option>Sales</option>
                   <option>Marketing</option>
                   <option>Engineering</option>
@@ -105,6 +112,7 @@ export default function AddEmployee() {
                   type="text"
                   placeholder="123 Main St"
                   autoComplete="street-address"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -118,6 +126,7 @@ export default function AddEmployee() {
                   type="text"
                   placeholder="City"
                   autoComplete="address-level2"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
@@ -129,8 +138,10 @@ export default function AddEmployee() {
                   id="state"
                   name="state"
                   autoComplete="state"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 >
+                  <option value="">Select State</option>
                   <option>State1</option>
                   <option>State2</option>
                   <option>State3</option>
@@ -145,6 +156,7 @@ export default function AddEmployee() {
                   name="postal-code"
                   type="text"
                   autoComplete="postal-code"
+                  required
                   className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
