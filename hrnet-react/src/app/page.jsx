@@ -207,9 +207,7 @@ export default function AddEmployee() {
         </div>
 
         <div className="flex justify-end gap-4 mt-8">
-          <button type="button" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-            Cancel
-          </button>
+          
           <button
             type="submit"
             className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -228,7 +226,12 @@ export default function AddEmployee() {
         overlayClassName="modal-overlay"
       >
         <h2>Employee Added</h2>
-        <button onClick={closeModal} className="button">OK</button>
+        <button 
+          onClick={closeModal}
+          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          close
+        </button>
       </Modal>
     </div>
   );
