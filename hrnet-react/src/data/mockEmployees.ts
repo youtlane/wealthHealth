@@ -1,0 +1,61 @@
+// mockEmployees.js (optional file for organizing mock data)
+const mockEmployees = [
+    {
+      firstName: 'John',
+      lastName: 'Doe',
+      dateOfBirth: '1990-05-12',
+      startDate: '2020-01-01',
+      department: 'Marketing',
+      street: '123 Main Street',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10001',
+    },
+    {
+      firstName: 'Jane',
+      lastName: 'Smith',
+      dateOfBirth: '1985-08-24',
+      startDate: '2018-03-15',
+      department: 'Finance',
+      street: '456 Elm Street',
+      city: 'Los Angeles',
+      state: 'CA',
+      zipCode: '90001',
+    },
+    {
+      firstName: 'Alice',
+      lastName: 'Johnson',
+      dateOfBirth: '1992-11-30',
+      startDate: '2021-05-20',
+      department: 'Engineering',
+      street: '789 Oak Avenue',
+      city: 'Chicago',
+      state: 'IL',
+      zipCode: '60601',
+    },
+    {
+      firstName: 'Bob',
+      lastName: 'Brown',
+      dateOfBirth: '1980-02-18',
+      startDate: '2016-09-10',
+      department: 'Sales',
+      street: '101 Pine Road',
+      city: 'Houston',
+      state: 'TX',
+      zipCode: '77001',
+    },
+    {
+      firstName: 'Emily',
+      lastName: 'Davis',
+      dateOfBirth: '1995-07-07',
+      startDate: '2019-11-05',
+      department: 'Human Resources',
+      street: '202 Maple Street',
+      city: 'Phoenix',
+      state: 'AZ',
+      zipCode: '85001',
+    },
+  ];
+  
+  export default mockEmployees;
+  
