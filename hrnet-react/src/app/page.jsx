@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addEmployee } from './redux/employeeSlice'; 
+import { useDispatch } from 'react-redux';
+import { addEmployee } from './redux/employeeSlice';
 import Link from 'next/link';
 import './global.css';
 import Image from 'next/image';
@@ -22,14 +22,7 @@ export default function AddEmployee() {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [postalCode, setPostalCode] = useState('');
-
   const dispatch = useDispatch();
-  const employees = useSelector((state) => state.employees);
-
-  // Sauvegarder les employés dans le local storage chaque fois qu'ils changent
-  useEffect(() => {
-    localStorage.setItem('employees', JSON.stringify(employees));
-  }, [employees]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -51,6 +44,16 @@ export default function AddEmployee() {
   };
 
   const closeModal = () => {
+    // Réinitialiser les champs du formulaire
+    setFirstName('');
+    setLastName('');
+    setDob('');
+    setStartDate('');
+    setDepartment('');
+    setStreet('');
+    setCity('');
+    setState('');
+    setPostalCode('');
     setModalIsOpen(false);
   };
 
@@ -216,29 +219,28 @@ export default function AddEmployee() {
         <div className="flex justify-end gap-4 mt-8">
           <button
             type="submit"
-            className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             Save
           </button>
         </div>
       </form>
 
+      {/* Modal de confirmation */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Employee Added"
-        className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75"
+        className="modal"
+        overlayClassName="modal-overlay"
       >
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm mx-auto">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Employee Added</h2>
-          <p className="text-gray-600">The employee has been successfully added.</p>
-          <button
-            onClick={closeModal}
-            className="mt-4 bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          >
-            Close
-          </button>
-        </div>
+        <h2>Employee Added</h2>
+        <button 
+          onClick={closeModal}
+          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Close
+        </button>
       </Modal>
     </div>
   );
