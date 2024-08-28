@@ -1,123 +1,112 @@
 "use client";
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTable, usePagination, useGlobalFilter } from 'react-table';
 
 const AllEmployee = () => {
+  // Use the useSelector hook to access the employees from the Redux store
   const employees = useSelector((state) => state.employees);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5);
 
-  const [searchInput, setSearchInput] = useState('');
-
-  const columns = useMemo(
-    () => [
-      { Header: 'First Name', accessor: 'firstName' },
-      { Header: 'Last Name', accessor: 'lastName' },
-      { Header: 'Start Date', accessor: 'startDate' },
-      { Header: 'Department', accessor: 'department' },
-      { Header: 'Date of Birth', accessor: 'dob' },
-      { Header: 'Street', accessor: 'address.street' },
-      { Header: 'City', accessor: 'address.city' },
-      { Header: 'State', accessor: 'address.state' },
-      { Header: 'Zip Code', accessor: 'address.postalCode' },
-    ],
-    []
+  // Filter employees based on the search term
+  const filteredEmployees = employees.filter(employee => 
+    employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const data = useMemo(() => employees, [employees]);
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    page,
-    setGlobalFilter,
-    nextPage,
-    previousPage,
-    canNextPage,
-    canPreviousPage,
-    pageOptions,
-    state,
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState: { pageIndex: 0 },
-    },
-    useGlobalFilter,
-    usePagination
-  );
-
-  const { pageIndex, globalFilter } = state;
+  // Pagination logic
+  const indexOfLastEmployee = currentPage * itemsPerPage;
+  const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
+  const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+  const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
 
   const handleSearchChange = (e) => {
-    const value = e.target.value || '';
-    setGlobalFilter(value);
-    setSearchInput(value);
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Employee List</h1>
+
+      {/* Search Bar */}
       <input
-        value={searchInput}
+        type="text"
+        placeholder="Search by first or last name"
+        value={searchTerm}
         onChange={handleSearchChange}
-        placeholder="Search..."
-        className="mb-4 p-2 border border-gray-300 rounded"
+        className="mb-4 p-2 border border-gray-300 rounded-md w-full"
       />
-      <table {...getTableProps()} className="min-w-full bg-white border border-gray-200">
+
+      {/* Employee Table */}
+      <table className="min-w-full bg-white border">
         <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100">
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()} className="p-2 border-b border-gray-200">
-                  {column.render('Header')}
-                </th>
-              ))}
-            </tr>
-          ))}
+          <tr>
+            <th className="py-2 px-4 border-b">First Name</th>
+            <th className="py-2 px-4 border-b">Last Name</th>
+            <th className="py-2 px-4 border-b">Start Date</th>
+            <th className="py-2 px-4 border-b">Department</th>
+            <th className="py-2 px-4 border-b">Date of Birth</th>
+            <th className="py-2 px-4 border-b">Street</th>
+            <th className="py-2 px-4 border-b">City</th>
+            <th className="py-2 px-4 border-b">State</th>
+            <th className="py-2 px-4 border-b">Zip Code</th>
+          </tr>
         </thead>
-        <tbody {...getTableBodyProps()}>
-          {page.length > 0 ? (
-            page.map((row) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} className="text-center">
-                  {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="p-2 border-b border-gray-200">
-                      {cell.render('Cell')}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })
+        <tbody>
+          {currentEmployees.length > 0 ? (
+            currentEmployees.map((employee, index) => (
+              <tr key={index}>
+                <td className="py-2 px-4 border-b">{employee.firstName}</td>
+                <td className="py-2 px-4 border-b">{employee.lastName}</td>
+                <td className="py-2 px-4 border-b">{employee.startDate}</td>
+                <td className="py-2 px-4 border-b">{employee.department}</td>
+                <td className="py-2 px-4 border-b">{employee.dob}</td>
+                <td className="py-2 px-4 border-b">{employee.address?.street || 'N/A'}</td>
+                <td className="py-2 px-4 border-b">{employee.address?.city || 'N/A'}</td>
+                <td className="py-2 px-4 border-b">{employee.address?.state || 'N/A'}</td>
+                <td className="py-2 px-4 border-b">{employee.address?.postalCode || 'N/A'}</td>
+              </tr>
+            ))
           ) : (
             <tr>
-              <td colSpan={columns.length} className="text-center p-2">
-                No data available in table
-              </td>
+              <td className="py-2 px-4 border-b text-center" colSpan="9">No data available in table</td>
             </tr>
           )}
         </tbody>
       </table>
+
+      {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-4">
-        <span>
-          Showing {page.length > 0 ? `${pageIndex * 10 + 1} to ${pageIndex * 10 + page.length}` : '0'} of{' '}
-          {employees.length} entries
-        </span>
-        <div className="flex space-x-2">
+        <p className="text-sm text-gray-600">
+          Showing {indexOfFirstEmployee + 1} to {Math.min(indexOfLastEmployee, filteredEmployees.length)} of {filteredEmployees.length} entries
+        </p>
+        <div className="flex gap-4">
           <button
-            onClick={() => previousPage()}
-            disabled={!canPreviousPage}
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className={`bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
           >
             Previous
           </button>
           <button
-            onClick={() => nextPage()}
-            disabled={!canNextPage}
-            className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className={`bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
           >
             Next
           </button>
@@ -125,6 +114,6 @@ const AllEmployee = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AllEmployee;
