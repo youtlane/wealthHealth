@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { FaSearch, FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import icons
 
 const AllEmployee = () => {
-  // Use the useSelector hook to access the employees from the Redux store
+  // Use the useSelector hook to access the employees from the Redux store 
   const employees = useSelector((state) => state.employees);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);

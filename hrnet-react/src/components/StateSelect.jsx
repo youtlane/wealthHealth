@@ -1,8 +1,6 @@
-// components/StateSelect.jsx
-import React from 'react';
-import Select from 'react-select';
 
 const states = [
+    { value: '', label: 'Select State' },
     { value: 'AL', label: 'Alabama' },
     { value: 'AK', label: 'Alaska' },
     { value: 'AZ', label: 'Arizona' },
@@ -57,15 +55,25 @@ const states = [
 
 const StateSelect = ({ value, onChange, error }) => (
     <div>
-        <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">State</label>
-        <Select
+        <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
+            State
+        </label>
+        <select
             id="state"
-            options={states}
-            value={states.find(state => state.value === value)}
-            onChange={(selectedOption) => onChange(selectedOption ? selectedOption.value : '')}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            aria-invalid={error ? "true" : "false"}
+            aria-describedby="state-error"
             className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-    {error && <span className="text-red-500 text-sm">{error}</span>}
+        >
+            {states.map((state) => (
+                <option key={state.value} value={state.value}>
+                    {state.label}
+                </option>
+            ))}
+        </select>
+        {error && <span id="state-error" className="text-red-500 text-sm">{error}</span>}
     </div>
 );
+
 export default StateSelect;
