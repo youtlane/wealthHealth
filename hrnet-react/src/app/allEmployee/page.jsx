@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FaSearch, FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Import icons
+import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown } from 'react-icons/fa'; 
 
 const AllEmployee = () => {
   // Use the useSelector hook to access the employees from the Redux store 
@@ -61,15 +61,51 @@ const AllEmployee = () => {
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
           <thead className="bg-indigo-100">
             <tr>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">First Name</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Last Name</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Start Date</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Department</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Date of Birth</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Street</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">City</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">State</th>
-              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">Zip Code</th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                First Name
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Last Name
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Start Date
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Department
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Date of Birth
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Street
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                City
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                State
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
+              <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
+                Zip Code
+                <FaSortUp className="inline ml-1" />
+                <FaSortDown className="inline ml-1" />
+              </th>
             </tr>
           </thead>
           <tbody>
