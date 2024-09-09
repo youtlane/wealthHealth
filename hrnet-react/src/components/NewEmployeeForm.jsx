@@ -168,16 +168,17 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                                 {...register("address.postalCode", {
                                     required: "Zip Code is required",
                                     pattern: {
-                                        value: /^[0-9]{5}(?:-[0-9]{4})?$/,
-                                        message: "Zip Code must be in the format 12345 or 12345-6789"
+                                        value: /^[0-9]{4}$/,
+                                        message: "Zip Code must be in the format 1234"
                                     }
                                 })}
                                 type="text"
-                                placeholder="12345"
+                                placeholder="1234"
                                 aria-invalid={errors.address?.postalCode ? "true" : "false"}
                                 aria-describedby="zip-code-error"
                                 className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
+
                             {errors.address?.postalCode && (
                                 <span id="zip-code-error" className="text-red-500 text-sm">
                                     {errors.address.postalCode.message}

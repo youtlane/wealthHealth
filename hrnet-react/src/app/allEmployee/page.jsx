@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux';
 import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown } from 'react-icons/fa'; 
 
 const AllEmployee = () => {
-  // Use the useSelector hook to access the employees from the Redux store 
   const employees = useSelector((state) => state.employees);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
+  const [sortField, setSortField] = useState(null);
+  const [sortDirection, setSortDirection] = useState(null);
 
   // Filter employees based on the search term
   const filteredEmployees = employees.filter(employee => 
@@ -17,10 +18,30 @@ const AllEmployee = () => {
     employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Sort employees based on the current sorting field and direction
+  const sortedEmployees = [...filteredEmployees].sort((a, b) => {
+    if (!sortField) return 0;
+
+    let aValue = a[sortField];
+    let bValue = b[sortField];
+
+    // Convert to lowercase for string comparison
+    if (typeof aValue === 'string') aValue = aValue.toLowerCase();
+    if (typeof bValue === 'string') bValue = bValue.toLowerCase();
+
+    if (sortDirection === 'asc') {
+      return aValue > bValue ? 1 : -1;
+    } else if (sortDirection === 'desc') {
+      return aValue < bValue ? 1 : -1;
+    }
+
+    return 0;
+  });
+
   // Pagination logic
   const indexOfLastEmployee = currentPage * itemsPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
-  const currentEmployees = filteredEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
+  const currentEmployees = sortedEmployees.slice(indexOfFirstEmployee, indexOfLastEmployee);
   const totalPages = Math.ceil(filteredEmployees.length / itemsPerPage);
 
   const handleSearchChange = (e) => {
@@ -37,6 +58,16 @@ const AllEmployee = () => {
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Handle sorting
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
     }
   };
 
@@ -63,48 +94,48 @@ const AllEmployee = () => {
             <tr>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 First Name
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('firstName')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('firstName')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Last Name
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('lastName')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('lastName')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Start Date
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('startDate')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('startDate')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Department
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('department')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('department')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Date of Birth
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('dob')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('dob')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Street
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.street')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.street')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 City
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.city')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.city')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 State
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.state')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.state')} />
               </th>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
                 Zip Code
-                <FaSortUp className="inline ml-1" />
-                <FaSortDown className="inline ml-1" />
+                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.postalCode')} />
+                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.postalCode')} />
               </th>
             </tr>
           </thead>
