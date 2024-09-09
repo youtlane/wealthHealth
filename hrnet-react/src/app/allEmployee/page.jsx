@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown } from 'react-icons/fa'; 
+import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown, FaHome } from 'react-icons/fa'; 
+import Link from 'next/link';
 
 const AllEmployee = () => {
   const employees = useSelector((state) => state.employees);
@@ -14,9 +15,17 @@ const AllEmployee = () => {
 
   // Filter employees based on the search term
   const filteredEmployees = employees.filter(employee => 
-    employee.firstName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    employee.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+    (employee.firstName || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+    (employee.lastName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.address?.postalCode || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.address?.state || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.address?.city || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.dob || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.startDate || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (employee.department || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
+  
 
   // Sort employees based on the current sorting field and direction
   const sortedEmployees = [...filteredEmployees].sort((a, b) => {
@@ -73,7 +82,16 @@ const AllEmployee = () => {
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Employee List</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Employee List</h1>
+        <Link  href="/">
+          <FaHome 
+            className="text-gray-600 cursor-pointer hover:text-indigo-600" 
+            size={24} 
+          />
+        </Link>
+      </div>
+      
 
       {/* Search Bar */}
       <div className="relative mb-6">
