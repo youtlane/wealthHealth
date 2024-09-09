@@ -93,104 +93,147 @@ const AllEmployee = () => {
           <thead className="bg-indigo-100">
             <tr>
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                First Name
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('firstName')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('firstName')} />
+                <div className="flex items-center">
+                  <span className="mr-2">First Name</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('firstName')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('firstName')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Last Name
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('lastName')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('lastName')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Last Name</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('lastName')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('lastName')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Start Date
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('startDate')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('startDate')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Start Date</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('startDate')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('startDate')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Department
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('department')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('department')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Department</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('department')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('department')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Date of Birth
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('dob')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('dob')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Date of Birth</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('dob')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('dob')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Street
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.street')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.street')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Street</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.street')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.street')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                City
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.city')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.city')} />
+                <div className="flex items-center">
+                  <span className="mr-2">City</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.city')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.city')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                State
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.state')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.state')} />
+                <div className="flex items-center">
+                  <span className="mr-2">State</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.state')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.state')} />
+                  </div>
+                </div>
               </th>
+
               <th className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                Zip Code
-                <FaSortUp className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.postalCode')} />
-                <FaSortDown className="inline ml-1 cursor-pointer" onClick={() => handleSort('address.postalCode')} />
+                <div className="flex items-center">
+                  <span className="mr-2">Zip Code</span>
+                  <div className="flex flex-col">
+                    <FaSortUp className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.postalCode')} />
+                    <FaSortDown className="text-gray-400 cursor-pointer hover:text-indigo-600" onClick={() => handleSort('address.postalCode')} />
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>
+
           <tbody>
-            {currentEmployees.length > 0 ? (
-              currentEmployees.map((employee, index) => (
-                <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} hover:bg-indigo-50 transition duration-150`}>
-                  <td className="py-3 px-4 border-b">{employee.firstName}</td>
-                  <td className="py-3 px-4 border-b">{employee.lastName}</td>
-                  <td className="py-3 px-4 border-b">{employee.startDate}</td>
-                  <td className="py-3 px-4 border-b">{employee.department}</td>
-                  <td className="py-3 px-4 border-b">{employee.dob}</td>
-                  <td className="py-3 px-4 border-b">{employee.address?.street || 'N/A'}</td>
-                  <td className="py-3 px-4 border-b">{employee.address?.city || 'N/A'}</td>
-                  <td className="py-3 px-4 border-b">{employee.address?.state || 'N/A'}</td>
-                  <td className="py-3 px-4 border-b">{employee.address?.postalCode || 'N/A'}</td>
-                </tr>
-              ))
-            ) : (
+            {currentEmployees.length === 0 ? (
               <tr>
-                <td className="py-6 px-4 text-center text-gray-500" colSpan="9">
-                  No data available in table
+                <td colSpan="9" className="py-4 px-6 text-center text-gray-500">
+                  No employees found.
                 </td>
               </tr>
+            ) : (
+              currentEmployees.map((employee) => (
+                <tr key={employee.id} className="border-b">
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.firstName}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.lastName}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.startDate}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.department}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.dob}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.address.street}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.address.city}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.address.state}</td>
+                  <td className="py-3 px-4 text-sm text-gray-700">{employee.address.postalCode}</td>
+                </tr>
+              ))
             )}
           </tbody>
         </table>
       </div>
 
-      {/* Pagination Controls */}
+      {/* Pagination */}
       <div className="flex justify-between items-center mt-6">
-        <p className="text-sm text-gray-600">
-          Showing {indexOfFirstEmployee + 1} to {Math.min(indexOfLastEmployee, filteredEmployees.length)} of {filteredEmployees.length} entries
-        </p>
-        <div className="flex gap-4">
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-            className={`flex items-center bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ${currentPage === 1 && 'opacity-50 cursor-not-allowed'}`}
-          >
-            <FaArrowLeft className="mr-2" />
-            Previous
-          </button>
-          <button
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages}
-            className={`flex items-center bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 ${currentPage === totalPages && 'opacity-50 cursor-not-allowed'}`}
-          >
-            Next
-            <FaArrowRight className="ml-2" />
-          </button>
-        </div>
+        <button
+          onClick={handlePreviousPage}
+          disabled={currentPage === 1}
+          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          <FaArrowLeft className="inline-block mr-2" /> Previous
+        </button>
+
+        <span className="text-sm text-gray-600">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          onClick={handleNextPage}
+          disabled={currentPage === totalPages}
+          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+        >
+          Next <FaArrowRight className="inline-block ml-2" />
+        </button>
       </div>
     </div>
   );
-}
+};
 
 export default AllEmployee;
