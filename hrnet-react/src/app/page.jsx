@@ -14,16 +14,19 @@ export default function AddEmployee() {
 
   const handleSubmit = (data) => {
     // Destructure the form data
-    const { firstName, lastName, dob, startDate, department, address } = data;
+    const { firstName, lastName, dateOfBirth, startDate, department, street, city, state, zipCode } = data;
 
-    // Create new employee object
+    // Create new employee object with all fields at the top level
     const newEmployee = {
       firstName,
       lastName,
-      dob,
+      dateOfBirth,
       startDate,
       department,
-      address
+      street,
+      city,
+      state,
+      zipCode,
     };
 
     // Dispatch the action to add the employee

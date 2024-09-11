@@ -1,26 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit';
-import mockEmployees from '@/data/mockEmployees'; 
-
-
-const getInitialEmployees = () => {
-    if (typeof window !== 'undefined') {
-        const savedEmployees = localStorage.getItem('employees');
-        if (savedEmployees) {
-            return JSON.parse(savedEmployees);
-        }
-    }
-    return mockEmployees; // Retourner les données mockées si aucune donnée n'est trouvée dans le local storage
-};
 
 const employeeSlice = createSlice({
     name: 'employees',
-    initialState: getInitialEmployees(),
+    initialState: [], 
     reducers: {
         addEmployee: (state, action) => {
-            state.push(action.payload);
-            if (typeof window !== 'undefined') {
-                localStorage.setItem('employees', JSON.stringify(state));
-            }
+            const newEmployee = {
+                firstName: action.payload.firstName,
+                lastName: action.payload.lastName,
+                dateOfBirth: action.payload.dateOfBirth, 
+                startDate: action.payload.startDate,
+                department: action.payload.department,
+                street: action.payload.street,  
+                city: action.payload.city,
+                state: action.payload.state,
+                zipCode: action.payload.zipCode, 
+            };
+            state.push(newEmployee); 
         },
     },
 });

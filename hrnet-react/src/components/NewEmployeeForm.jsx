@@ -69,10 +69,10 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                             )}
                         </div>
                         <div>
-                            <label htmlFor="dob" className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                            <label htmlFor="date-of-birth" className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
                             <input
-                                id="dob"
-                                {...register("dob", {
+                                id="date-of-birth"
+                                {...register("dateOfBirth", {
                                     required: "Date of Birth is required",
                                     validate: (value) => {
                                         return value <= new Date().toISOString().split("T")[0]
@@ -80,13 +80,13 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                                     }
                                 })}
                                 type="date"
-                                aria-invalid={errors.dob ? "true" : "false"}
-                                aria-describedby="dob-error"
+                                aria-invalid={errors.dateOfBirth ? "true" : "false"}
+                                aria-describedby="date-of-birth-error"
                                 className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-                            {errors.dob && (
-                                <span id="dob-error" className="text-red-500 text-sm">
-                                    {errors.dob.message}
+                            {errors.dateOfBirth && (
+                                <span id="date-of-birth-error" className="text-red-500 text-sm">
+                                    {errors.dateOfBirth.message}
                                 </span>
                             )}
                         </div>
@@ -123,19 +123,19 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                     <h2 className="text-lg font-semibold text-gray-800 mb-4">Address</h2>
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                         <div>
-                            <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                            <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">Street</label>
                             <input
-                                id="address"
-                                {...register("address.street", { required: "Address is required" })}
+                                id="street"
+                                {...register("street", { required: "Street is required" })}
                                 type="text"
                                 placeholder="123 Main St"
-                                aria-invalid={errors.address?.street ? "true" : "false"}
-                                aria-describedby="address-error"
+                                aria-invalid={errors.street ? "true" : "false"}
+                                aria-describedby="street-error"
                                 className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-                            {errors.address?.street && (
-                                <span id="address-error" className="text-red-500 text-sm">
-                                    {errors.address.street.message}
+                            {errors.street && (
+                                <span id="street-error" className="text-red-500 text-sm">
+                                    {errors.street.message}
                                 </span>
                             )}
                         </div>
@@ -143,45 +143,44 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                             <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
                             <input
                                 id="city"
-                                {...register("address.city", { required: "City is required" })}
+                                {...register("city", { required: "City is required" })}
                                 type="text"
                                 placeholder="City"
-                                aria-invalid={errors.address?.city ? "true" : "false"}
+                                aria-invalid={errors.city ? "true" : "false"}
                                 aria-describedby="city-error"
                                 className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-                            {errors.address?.city && (
+                            {errors.city && (
                                 <span id="city-error" className="text-red-500 text-sm">
-                                    {errors.address.city.message}
+                                    {errors.city.message}
                                 </span>
                             )}
                         </div>
                         <StateSelect
-                            value={getValues("address.state")}
-                            onChange={(value) => setValue('address.state', value)}
-                            error={errors.address?.state?.message}
+                            value={getValues("state")}
+                            onChange={(value) => setValue('state', value)}
+                            error={errors.state?.message}
                         />
                         <div>
                             <label htmlFor="zip-code" className="block text-sm font-medium text-gray-700 mb-1">Zip Code</label>
                             <input
                                 id="zip-code"
-                                {...register("address.postalCode", {
+                                {...register("zipCode", {
                                     required: "Zip Code is required",
                                     pattern: {
-                                        value: /^[0-9]{4}$/,
-                                        message: "Zip Code must be in the format 1234"
+                                        value: /^[0-9]{5}$/,
+                                        message: "Zip Code must be in the format 12345"
                                     }
                                 })}
                                 type="text"
-                                placeholder="1234"
-                                aria-invalid={errors.address?.postalCode ? "true" : "false"}
+                                placeholder="12345"
+                                aria-invalid={errors.zipCode ? "true" : "false"}
                                 aria-describedby="zip-code-error"
                                 className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             />
-
-                            {errors.address?.postalCode && (
+                            {errors.zipCode && (
                                 <span id="zip-code-error" className="text-red-500 text-sm">
-                                    {errors.address.postalCode.message}
+                                    {errors.zipCode.message}
                                 </span>
                             )}
                         </div>
