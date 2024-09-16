@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown, FaHome } from "react-icons/fa";
 import Link from "next/link";
+import '../global.css';
 
 const AllEmployee = () => {
   const employees = useSelector((state) => state.employees);
