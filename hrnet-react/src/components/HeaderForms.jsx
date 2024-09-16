@@ -10,9 +10,10 @@ const HeaderForms = () => {
                     <Image
                         src="/hrnet-logo.png"
                         alt="HRnet Logo"
-                        layout="fill"
-                        objectFit="contain"
-                        priority 
+                        fill
+                        style={{ objectFit: 'contain' }}
+                        priority
+                        sizes="(max-width: 600px) 100vw, 50vw"
                     />
                 </div>
                 <Link className="mt-2 text-sm text-indigo-600 hover:underline" href="/allEmployee">View Current Employees</Link>
