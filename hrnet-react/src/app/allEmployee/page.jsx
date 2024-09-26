@@ -1,73 +1,70 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { FaSearch, FaArrowLeft, FaArrowRight, FaSortUp, FaSortDown, FaHome } from "react-icons/fa";
+import { useTable, usePagination } from "react-table";
+import { FaSearch, FaHome } from "react-icons/fa";
 import Link from "next/link";
 import '../global.css';
-
-const filterEmployees = (employees, searchTerm) => {
-  const term = searchTerm.toLowerCase();
-  return employees.filter((employee) =>
-    Object.values(employee).some((value) =>
-      value ? value.toLowerCase().includes(term) : false
-    )
-  );
-};
-
-const sortEmployees = (employees, sortField, sortDirection) => {
-  if (!sortField) return employees;
-
-  return [...employees].sort((a, b) => {
-    const aValue = typeof a[sortField] === "string" ? a[sortField].toLowerCase() : a[sortField];
-    const bValue = typeof b[sortField] === "string" ? b[sortField].toLowerCase() : b[sortField];
-
-    if (sortDirection === "asc") return aValue > bValue ? 1 : -1;
-    if (sortDirection === "desc") return aValue < bValue ? 1 : -1;
-    return 0;
-  });
-};
 
 const AllEmployee = () => {
   const employees = useSelector((state) => state.employees);
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [sortField, setSortField] = useState(null);
-  const [sortDirection, setSortDirection] = useState(null);
 
-  const filteredEmployees = filterEmployees(employees, searchTerm);
-  const sortedEmployees = sortEmployees(filteredEmployees, sortField, sortDirection);
+  const filteredEmployees = useMemo(() => {
+    return employees.filter((employee) =>
+      Object.values(employee).some((value) =>
+        value ? value.toString().toLowerCase().includes(searchTerm.toLowerCase()) : false
+      )
+    );
+  }, [employees, searchTerm]);
 
-  const totalEmployees = filteredEmployees.length;
-  const totalPages = Math.ceil(totalEmployees / itemsPerPage);
-  const currentEmployees = sortedEmployees.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
+  const data = useMemo(() => {
+    return filteredEmployees.map((employee) => ({
+      ...employee,
+    }));
+  }, [filteredEmployees]);
+
+  const columns = useMemo(
+    () => [
+      { Header: "First Name", accessor: "firstName" },
+      { Header: "Last Name", accessor: "lastName" },
+      { Header: "Start Date", accessor: "startDate" },
+      { Header: "Department", accessor: "department" },
+      { Header: "Date of Birth", accessor: "dateOfBirth" },
+      { Header: "Street", accessor: "street" },
+      { Header: "City", accessor: "city" },
+      { Header: "State", accessor: "state" },
+      { Header: "Zip Code", accessor: "zipCode" },
+    ],
+    []
   );
 
-  const handleSearchChange = (e) => {
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    page,
+    prepareRow,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    gotoPage,
+    nextPage,
+    previousPage,
+    state: { pageIndex },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 10 },
+    },
+    usePagination
+  );
+
+  const handleSearchChange = useCallback((e) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (delta) => {
-    setCurrentPage((prevPage) => Math.max(1, Math.min(totalPages, prevPage + delta)));
-  };
-
-  const handleSortClick = (field) => () => {
-    if (sortField === field) {
-      setSortDirection((prevDirection) => (prevDirection === "asc" ? "desc" : "asc"));
-    } else {
-      setSortField(field);
-      setSortDirection("asc");
-    }
-  };
-
-  const handleItemsPerPageChange = (e) => {
-    setItemsPerPage(Number(e.target.value));
-    setCurrentPage(1);
-  };
+  }, []);
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
@@ -77,18 +74,6 @@ const AllEmployee = () => {
           <Link href="/">
             <FaHome className="text-gray-600 cursor-pointer hover:text-indigo-600 mr-4" size={24} />
           </Link>
-          <div className="flex items-center space-x-2">
-            <label className="text-gray-600">Show:</label>
-            <select
-              value={itemsPerPage}
-              onChange={handleItemsPerPageChange}
-              className="border border-gray-300 rounded-lg p-2 pl-3 pr-8 shadow focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              {[10, 25, 50, 100].map((value) => (
-                <option key={value} value={value}>{value}</option>
-              ))}
-            </select>
-          </div>
         </div>
       </header>
 
@@ -103,77 +88,43 @@ const AllEmployee = () => {
         <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
       </div>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg overflow-hidden">
-          <thead className="bg-indigo-100">
-            <tr>
-              {["firstName", "lastName", "startDate", "department", "dateOfBirth", "street", "city", "state", "zipCode"].map((field) => (
-                <th key={field} className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b">
-                  <div className="flex items-center">
-                    <span className="mr-2">{field.replace(/([A-Z])/g, " $1").toUpperCase()}</span>
-                    <div className="flex flex-col">
-                      <FaSortUp
-                        className={`cursor-pointer ${sortField === field && sortDirection === "asc" ? "text-indigo-600" : "text-gray-400"}`}
-                        onClick={handleSortClick(field)}
-                        aria-label={`Sort by ${field.replace(/([A-Z])/g, " $1")}`}
-                      />
-                      <FaSortDown
-                        className={`cursor-pointer ${sortField === field && sortDirection === "desc" ? "text-indigo-600" : "text-gray-400"}`}
-                        onClick={handleSortClick(field)}
-                        aria-label={`Sort by ${field.replace(/([A-Z])/g, " $1")}`}
-                      />
-                    </div>
-                  </div>
+      <table {...getTableProps()} className="min-w-full border-collapse border border-gray-200 rounded-lg overflow-hidden shadow-lg">
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()} className="border border-gray-300 p-2" style={{ backgroundColor: 'rgb(224, 231, 255)', color: 'rgb(75, 85, 99)' }}>
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
-          </thead>
-
-          <tbody>
-            {currentEmployees.length === 0 ? (
-              <tr>
-                <td colSpan="9" className="py-4 px-6 text-center text-gray-500">
-                  No employees found.
-                </td>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map(row => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()} className="border border-gray-300">
+                {row.cells.map(cell => (
+                  <td {...cell.getCellProps()} className="border border-gray-300 p-2">
+                    {cell.render('Cell')}
+                  </td>
+                ))}
               </tr>
-            ) : (
-              currentEmployees.map((employee, index) => (
-                <tr key={index} className="border-b">
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.firstName}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.lastName}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.startDate}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.department}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.dateOfBirth}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.street}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.city}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.state}</td>
-                  <td className="py-3 px-4 text-sm text-gray-700">{employee.zipCode}</td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+            );
+          })}
+        </tbody>
+      </table>
 
-      <div className="flex justify-between items-center mt-6">
-        <button
-          onClick={() => handlePageChange(-1)}
-          disabled={currentPage === 1}
-          aria-label="Previous Page"
-          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          <FaArrowLeft className="inline-block mr-2" /> Previous
+      <div className="flex justify-between mt-4">
+        <button onClick={() => previousPage()} disabled={!canPreviousPage} className="bg-indigo-600 text-white px-4 py-2 rounded disabled:opacity-50">
+          Previous
         </button>
-
-        <span className="text-sm text-gray-600">Page {currentPage} of {totalPages}</span>
-
-        <button
-          onClick={() => handlePageChange(1)}
-          disabled={currentPage === totalPages}
-          aria-label="Next Page"
-          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          Next <FaArrowRight className="inline-block ml-2" />
+        <span>
+          Page {pageIndex + 1} of {pageOptions.length}
+        </span>
+        <button onClick={() => nextPage()} disabled={!canNextPage} className="bg-indigo-600 text-white px-4 py-2 rounded disabled:opacity-50">
+          Next
         </button>
       </div>
     </div>
