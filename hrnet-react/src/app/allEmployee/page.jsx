@@ -2,8 +2,8 @@
 
 import React, { useMemo, useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useTable, usePagination } from "react-table";
-import { FaSearch, FaHome } from "react-icons/fa";
+import { useTable, usePagination, useSortBy } from "react-table";
+import { FaSearch, FaHome, FaSortUp, FaSortDown } from "react-icons/fa";
 import Link from "next/link";
 import '../global.css';
 
@@ -24,11 +24,7 @@ const AllEmployee = () => {
     );
   }, [employees, searchTerm]);
 
-  const data = useMemo(() => {
-    return filteredEmployees.map((employee) => ({
-      ...employee,
-    }));
-  }, [filteredEmployees]);
+  const data = useMemo(() => filteredEmployees, [filteredEmployees]);
 
   const columns = useMemo(
     () => [
@@ -65,6 +61,7 @@ const AllEmployee = () => {
       data,
       initialState: { pageIndex: 0, pageSize: itemsPerPage }, // Dynamic items per page
     },
+    useSortBy,  // Adding sorting functionality
     usePagination
   );
 
@@ -119,11 +116,24 @@ const AllEmployee = () => {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
                 <th
-                  {...column.getHeaderProps()}
+                  {...column.getHeaderProps(column.getSortByToggleProps())}  // Enable sorting on header click
                   className="py-3 px-4 text-left text-sm font-medium text-gray-600 border-b"
                   style={{ backgroundColor: 'rgb(224, 231, 255)', color: 'rgb(75, 85, 99)' }}
                 >
-                  {column.render("Header")}
+                  <div className="flex items-center">
+                    {column.render("Header")}
+                    {/* Sorting Icons - stack them vertically */}
+                    <div className="flex flex-col ml-2">
+                      {/* Ascending sort icon */}
+                      <FaSortUp
+                        className={column.isSorted && !column.isSortedDesc ? 'text-indigo-600' : 'text-gray-400'}
+                      />
+                      {/* Descending sort icon */}
+                      <FaSortDown
+                        className={column.isSorted && column.isSortedDesc ? 'text-indigo-600' : 'text-gray-400'}
+                      />
+                    </div>
+                  </div>
                 </th>
               ))}
             </tr>
