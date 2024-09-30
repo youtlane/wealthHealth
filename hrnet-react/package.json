@@ -14,6 +14,7 @@
     "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.7",
     "@tailwindcss/forms": "^0.5.7",
+    "custom-modal-react-hy": "^0.2.6",
     "next": "^14.2.11",
     "react": "^18",
     "react-dom": "^18",

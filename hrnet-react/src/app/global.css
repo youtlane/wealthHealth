@@ -2,25 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 /* global.css */
-.modal {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    max-width: 90%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-}

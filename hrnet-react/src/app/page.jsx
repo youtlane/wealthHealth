@@ -3,44 +3,38 @@
 import React, { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { addEmployee } from "./redux/employeeSlice";
-import Modal from "react-modal";
 import NewEmployeeForm from "../components/NewEmployeeForm";
+//import { CustomModal } from "custom-modal-react-hy";
+
 import './global.css';
+import { CustomModal } from "custom-modal-react-hy";
+
 
 export default function AddEmployee() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false); 
   const dispatch = useDispatch();
   const formRef = useRef(null);
 
   const handleSubmit = (data) => {
-    // destructure the form data
+    // Récupérer les données du formulaire
     const { firstName, lastName, dateOfBirth, startDate, department, street, city, state, zipCode } = data;
 
-    // create new employee object with all fields at the top level
-    const newEmployee = {
-      firstName,
-      lastName,
-      dateOfBirth,
-      startDate,
-      department,
-      street,
-      city,
-      state,
-      zipCode,
-    };
+    // Créer un nouvel objet employé
+    const newEmployee = { firstName, lastName, dateOfBirth, startDate, department, street, city, state, zipCode };
 
-    // dispatch the action to add the employee
+    // Dispatcher l'action pour ajouter l'employé
     dispatch(addEmployee(newEmployee));
 
-    // open the modal
+    // Ouvrir le modal après la soumission
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
-    // reeset all form fields
+    // Réinitialiser le formulaire
     if (formRef.current) {
       formRef.current.resetForm();
     }
+    // Fermer le modal
     setModalIsOpen(false);
   };
 
@@ -48,21 +42,10 @@ export default function AddEmployee() {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <NewEmployeeForm onSubmit={handleSubmit} ref={formRef} />
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Employee Added"
-        className="modal"
-        overlayClassName="modal-overlay"
-      >
+      {/* Modal personnalisé */}
+      <CustomModal isOpen={modalIsOpen} onClose={closeModal}>
         <h2>Employee Added</h2>
-        <button 
-          onClick={closeModal}
-          className="bg-indigo-600 text-white rounded-lg px-4 py-2 text-sm font-medium shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        >
-          Close
-        </button>
-      </Modal>
+      </CustomModal> 
     </div>
   );
 }
