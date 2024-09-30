@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import StateSelect from './StateSelect';
 import DepartmentSelect from './DepartmentSelect';
 import HeaderForms from "./HeaderForms";
+import DateInputField from "./DateInputField";
 
 const NewEmployeeForm = forwardRef((props, ref) => {
     const { onSubmit } = props;
@@ -70,48 +71,41 @@ const NewEmployeeForm = forwardRef((props, ref) => {
                         </div>
                         <div>
                             <label htmlFor="date-of-birth" className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
-                            <input
-                                id="date-of-birth"
-                                {...register("dateOfBirth", {
+                            <DateInputField
+                                id="dateOfBirth" 
+                                register={register}
+                                validation={{
                                     required: "Date of Birth is required",
                                     validate: (value) => {
-                                        return value <= new Date().toISOString().split("T")[0]
-                                            || "Date of Birth cannot be in the future";
-                                    }
-                                })}
-                                type="date"
-                                aria-invalid={errors.dateOfBirth ? "true" : "false"}
-                                aria-describedby="date-of-birth-error"
-                                className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        return (
+                                            value <= new Date().toISOString().split("T")[0] ||
+                                            "Date of Birth cannot be in the future"
+                                        );
+                                    },
+                                }}
+                                errors={errors}
                             />
-                            {errors.dateOfBirth && (
-                                <span id="date-of-birth-error" className="text-red-500 text-sm">
-                                    {errors.dateOfBirth.message}
-                                </span>
-                            )}
                         </div>
+                        
                         <div>
                             <label htmlFor="start-date" className="block text-sm font-medium text-gray-700 mb-1">Start Working Date</label>
-                            <input
-                                id="start-date"
-                                {...register("startDate", {
+                            <DateInputField
+                                id="startDate" 
+                                register={register}
+                                validation={{
                                     required: "Start date is required",
                                     validate: (value) => {
-                                        return value >= new Date().toISOString().split("T")[0]
-                                            || "Start date cannot be in the past";
-                                    }
-                                })}
-                                type="date"
-                                aria-invalid={errors.startDate ? "true" : "false"}
-                                aria-describedby="start-date-error"
-                                className="block w-full border border-gray-300 rounded-lg p-2 text-gray-900 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        return (
+                                            value >= new Date().toISOString().split("T")[0] ||
+                                            "Start date cannot be in the past"
+                                        );
+                                    },
+                                }}
+                                errors={errors}
                             />
-                            {errors.startDate && (
-                                <span id="start-date-error" className="text-red-500 text-sm">
-                                    {errors.startDate.message}
-                                </span>
-                            )}
                         </div>
+
+                        
                         <DepartmentSelect
                             value={getValues("department")}
                             onChange={(value) => setValue('department', value)}
